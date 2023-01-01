@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    <h1>Home</h1>
+
+    <div class="row">
+        {% for product in products %}
+            <div class="col-md-4">
+                <div class="card">
+                    <img src="{{ product.image.url }}" alt="{{ product.name }} image" class="card-image-top">
+                    <div class="card-body">
+                        <h4 class="card-title">{{ product.name }}</h4>
+                        <p>${{ product.price|floatformat:2 }}</p>
+                        <p class="card-text">{{ product.description }}</p>
+                    </div>
+                    
+                    <div class="card-footer">
+                        {% if product in cart.products.all %}
+                            <a href="{% url 'remove-from-cart' product.pk %}">Remove from cart</a>
+                        {% else %}
+                            <a href="{% url 'add-to-cart' product.pk %}">Add to cart</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock content %}
